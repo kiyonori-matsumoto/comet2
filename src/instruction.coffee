@@ -46,7 +46,7 @@ class Instruction
     @address.push(a)
 
   @decode: (code) ->
-    h = INSTRUCTIONS[code >> 8]
+    h = this.INSTRUCTIONS[code >> 8]
     throw 'No Instruction' unless h?
     h['gr'] = [(code >> 4) & 0xf , code & 0xf]
     h['gr'][1] = null if h['gr'][1] == 0 && h['size'] >= 2

@@ -15,10 +15,10 @@ class Flag
       when 'jump' then true
       when 'jpl' then !@sf
       when 'jov' then @of
-    else
-      throw 'Error'
+      else
+        throw 'Error'
 
   inspect: ->
     "sf:#{@sf}, zf:#{@zf}, of:#{@of}"
 
-module.exports = flag
+module.exports = Flag

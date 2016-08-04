@@ -1,3 +1,5 @@
+Comet2Simulator = require('./comet.coffee')
+
 Comet2Simulator.execute("""
 NAME:SAMPLE
 SIZE:0020

@@ -1,7 +1,7 @@
 Instruction = require('./instruction.coffee')
 
 class Memory
-  construcor: (@flag, pr_init = 0) ->
+  constructor: (@flag, pr_init = 0) ->
     @memory = (0xffff for _ in [0..0xffff])
     @pr = pr_init
     @sp = 0xffff
