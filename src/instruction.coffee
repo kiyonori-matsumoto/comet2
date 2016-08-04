@@ -6,12 +6,12 @@ class Instruction
     0x11: { name: 'st', size: 2, target: 'memory' }
     0x12: { name: 'lad', size: 2, target: 'gr', effective: true }
     0x14: { name: 'ld', type: 'LOGICAL', size: 1, target: 'gr' }
-    0x20: { name: 'adda', type: 'ALITHMETIC', size: 2, target: 'gr'}
-    0x21: { name: 'suba', type: 'ALITHMETIC', size: 2, target: 'gr'}
+    0x20: { name: 'adda', type: 'ARITHMETIC', size: 2, target: 'gr'}
+    0x21: { name: 'suba', type: 'ARITHMETIC', size: 2, target: 'gr'}
     0x22: { name: 'addl', type: 'LOGICAL', size: 2, target: 'gr'}
     0x23: { name: 'subl', type: 'LOGICAL', size: 2, target: 'gr'}
-    0x24: { name: 'adda', type: 'ALITHMETIC', size: 1, target: 'gr'}
-    0x25: { name: 'suba', type: 'ALITHMETIC', size: 1, target: 'gr'}
+    0x24: { name: 'adda', type: 'ARITHMETIC', size: 1, target: 'gr'}
+    0x25: { name: 'suba', type: 'ARITHMETIC', size: 1, target: 'gr'}
     0x26: { name: 'addl', type: 'LOGICAL', size: 1, target: 'gr'}
     0x27: { name: 'subl', type: 'LOGICAL', size: 1, target: 'gr'}
     0x30: { name: 'and', type: 'LOGICAL', size: 2, target: 'gr'}
@@ -20,12 +20,12 @@ class Instruction
     0x34: { name: 'and', type: 'LOGICAL', size: 1, target: 'gr'}
     0x35: { name: 'or', type: 'LOGICAL', size: 1, target: 'gr'}
     0x36: { name: 'xor', type: 'LOGICAL', size: 1, target: 'gr'}
-    0x40: { name: 'cpa', type: 'ALITHMETIC', size: 2}
+    0x40: { name: 'cpa', type: 'ARITHMETIC', size: 2}
     0x41: { name: 'cpl', type: 'LOGICAL', size: 2}
-    0x44: { name: 'cpa', type: 'ALITHMETIC', size: 1}
+    0x44: { name: 'cpa', type: 'ARITHMETIC', size: 1}
     0x45: { name: 'cpl', type: 'LOGICAL', size: 1}
-    0x50: { name: 'sla', type: 'ALITHMETIC', size: 2, target: 'gr', effective: true }
-    0x51: { name: 'sra', type: 'ALITHMETIC', size: 2, target: 'gr', effective: true }
+    0x50: { name: 'sla', type: 'ARITHMETIC', size: 2, target: 'gr', effective: true }
+    0x51: { name: 'sra', type: 'ARITHMETIC', size: 2, target: 'gr', effective: true }
     0x52: { name: 'sll', type: 'LOGICAL', size: 2, target: 'gr', effective: true }
     0x53: { name: 'srl', type: 'LOGICAL', size: 2, target: 'gr', effective: true }
     0x61: { name: 'jmi', type: 'JUMP', size: 2, effective: true }

@@ -5,7 +5,7 @@ class Flag
   update: (value, overflag) ->
     @of = overflag
     @sf = (value & 0x8000) != 0
-    @zf = value == 0
+    @zf = (value & 0xFFFF) == 0
 
   is_jumpable: (name) ->
     switch name
