@@ -35,6 +35,7 @@ class Memory
 
   stack_exec: (name, a, b) ->
     if name == 'push'
+      throw "Cannot push anymore" if @sp == 0
       @sp -= 1
       @memory[@sp] = a
     else if name == 'pop'

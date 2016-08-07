@@ -45,6 +45,11 @@ describe 'Alu', ->
       expect(result).toEqual(0xa)
       expect(flag.update).toHaveBeenCalledWith(0xa, true)
 
+    it 'becomes 0x80 when 0x8000 >> 8', ->
+      result = alu.exec(SRL, 0x8000, 8)
+      expect(result).toEqual(0x80)
+      expect(flag.update).toHaveBeenCalledWith(0x80, false)
+
     it 'becomes 0xffff when 0x8000 >> 15', ->
       result = alu.exec(SRA, 0x8000, 15)
       expect(result).toEqual(0xffff)
