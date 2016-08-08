@@ -50,7 +50,7 @@ describe "Memory", ->
       memory.set(1, 0xdead)
       inst = memory.next()
       expect(inst.size).toBe 2
-      expect(inst.address[0]).toBe 0xdead
+      expect(inst.address).toBe 0xdead
       expect(memory.pr).toBe 2
 
     it "get instruction with size = 1", ->
@@ -58,7 +58,7 @@ describe "Memory", ->
       inst = memory.next()
       expect(inst.size).toBe 1
       expect(inst.name).toBe 'pop'
-      expect(inst.address.length).toBe 0
+      expect(inst.address).toBeNull()
       expect(memory.pr).toBe 1
 
   describe "\#stack_exec", ->
@@ -79,4 +79,5 @@ describe "Memory", ->
       expect(-> memory.stack_exec('push', 2, 3)).toThrow()
 
     it 'throws when pop from empty stack', ->
+      expect(-> memory.stack_exec('pop', null, null)).not.toThrow()
       expect(-> memory.stack_exec('pop', null, null)).toThrow()

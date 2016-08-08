@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "StringScanner": "0.0.3",
     "coffeeify": "^2.0.1",
     "jasmine": "^2.4.1",
     "jasmine-node": "^1.14.5"

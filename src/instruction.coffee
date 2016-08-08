@@ -39,11 +39,19 @@ class Instruction
     0x80: { name: 'call', type: 'CALL', size: 2, effective: true }
     0x81: { name: 'ret', type: 'CALL', size: 1 }
 
-  constructor:  ({@name, @type = null, @size, @target = null, @effective = false, @gr}) ->
-    @address = []
+  constructor:  ({@name, @type, @size, @target, @effective, @gr, @data, @address = null}) ->
 
   add_address: (a) ->
-    @address.push(a)
+    @address = a
+
+  calc_size: ->
+    if @address?
+      @size = 2
+    else if @data?
+      @size = @data.length
+    else
+      @size = 1
+    this
 
   @decode: (code) ->
     h = this.INSTRUCTIONS[code >> 8]
@@ -51,5 +59,23 @@ class Instruction
     h['gr'] = [(code >> 4) & 0xf , code & 0xf]
     h['gr'][1] = null if h['gr'][1] == 0 && h['size'] >= 2
     new Instruction(h)
+
+  to_code: ->
+    for k, inst in Instruction.INSTRUCTIONS
+      if @name == inst.name && @size == inst.size
+        buf = k << 8
+        buf |= @gr[0] << 4
+        buf |= if @gr[1]? then @gr[1] else 0
+        ret = [buf]
+        if @size == 2
+          ret.push @address
+        return ret
+
+    if @name == 'dc'
+      return @data.map (e) ->
+        e & 0xffff
+    else if @name == 'ds'
+      return (0xffff for _ in [0...@size])
+    null
 
 module.exports = Instruction

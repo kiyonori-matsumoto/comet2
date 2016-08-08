@@ -22,5 +22,5 @@ describe 'Instruction', ->
     it 'add address', ->
       inst = Instruction.decode(0x8001)
       inst.add_address(0xbead)
-      expect(inst.address[0]).toBe 0xbead
+      expect(inst.address).toBe 0xbead
       expect(inst.name).toBe 'call'
