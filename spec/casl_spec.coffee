@@ -51,3 +51,9 @@ describe "Casl", ->
       expect(r[0].name).toBe 'dc'
       expect(r[0].size).toBe 7
       expect(r[0].data).toEqual [10, 0x20, 116, 101, 115, 116, "NIKAIDO"]
+
+    it 'can decode no-operand instruction', ->
+      r = casl.to_inst(casl.parse("DATA NOP"))
+      expect(r.length).toBe 1
+      expect(r[0].name).toBe 'nop'
+      expect(r[0].size).toBe 1

@@ -11,8 +11,10 @@
   "devDependencies": {
     "StringScanner": "0.0.3",
     "browserify": "^13.1.0",
+    "codemirror": "^5.18.2",
     "coffeeify": "^2.0.1",
     "jasmine": "^2.4.1",
-    "jasmine-node": "^1.14.5"
+    "jasmine-node": "^1.14.5",
+    "sprintf": "^0.1.5"
   }
 }

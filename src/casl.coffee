@@ -12,7 +12,7 @@ class Casl
   compile: (src) ->
     insts = this.parse(src)
     insts = this.to_inst(insts)
-    this.to_code(insts)
+    insts = this.to_code(insts)
 
   parse: (src) ->
     ss = new StringScanner(src)
@@ -79,6 +79,8 @@ class Casl
           else
             d = parse_operand(inst[2])
             new Instruction({name: inst[1][0].toLowerCase(), gr: d.gr, address: d.address}).calc_size()
+      else
+        continue
       if inst[0]? && inst[0][0]?
         throw 'syntax error' if inst[0].length != 1
         @labels.add(inst[0][0], current_address) if inst[0][0].length != 0
@@ -116,6 +118,7 @@ class Casl
     ret
 
   parse_operand = (data) ->
+    return {address: null, gr: [0, null]} unless data?
     a = null
     gr= [null, null]
     grp = 0
