@@ -61,11 +61,11 @@ class Instruction
     new Instruction(h)
 
   to_code: ->
-    for k, inst in Instruction.INSTRUCTIONS
+    for k, inst of Instruction.INSTRUCTIONS
       if @name == inst.name && @size == inst.size
-        buf = k << 8
-        buf |= @gr[0] << 4
-        buf |= if @gr[1]? then @gr[1] else 0
+        buf = k << 8 |
+          @gr[0] << 4 |
+          if @gr[1]? then @gr[1] else 0
         ret = [buf]
         if @size == 2
           ret.push @address
@@ -76,6 +76,8 @@ class Instruction
         e & 0xffff
     else if @name == 'ds'
       return (0xffff for _ in [0...@size])
+
     null
+
 
 module.exports = Instruction

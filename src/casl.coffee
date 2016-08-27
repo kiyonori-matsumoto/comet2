@@ -5,12 +5,16 @@ Labels         = require('./label.coffee')
 require './string.coffee'
 
 class Casl
-  @compile: (src) ->
-    insts = @parse(src)
-    insts = @to_inst(insts)
-    @to_code(insts)
+  constructor: ->
+    @labels = new Labels
+    this
 
-  @parse: (src) ->
+  compile: (src) ->
+    insts = this.parse(src)
+    insts = this.to_inst(insts)
+    this.to_code(insts)
+
+  parse: (src) ->
     ss = new StringScanner(src)
     buf = ""
     bufs = []
@@ -57,8 +61,7 @@ class Casl
     finish()
     insts
 
-  @to_inst: (insts) ->
-    labels = new Labels
+  to_inst: (insts) ->
     current_address = 0
     b = for inst in insts
       i = null
@@ -78,15 +81,19 @@ class Casl
             new Instruction({name: inst[1][0].toLowerCase(), gr: d.gr, address: d.address}).calc_size()
       if inst[0]? && inst[0][0]?
         throw 'syntax error' if inst[0].length != 1
-        labels.add(inst[0][0], current_address) if inst[0][0].length != 0
+        @labels.add(inst[0][0], current_address) if inst[0][0].length != 0
         i.current_address = current_address
 
       current_address += i.size
       i
 
-  @to_code = (insts) ->
+  to_code: (insts) ->
+    r = []
     for i in insts
-      0
+      r.push i.to_code()...
+    r.map (e) =>
+      if typeof(e) == 'string' then @labels.find(e) else e
+
 
   get_data = (data) ->
     ret = []
@@ -109,26 +116,14 @@ class Casl
     ret
 
   parse_operand = (data) ->
-    is_gr = (s) ->
-      if s.match(/^GR[0-7]$/) then true else false
-
-    is_address = (s) ->
-      if is_gr(s) then false
-      else if s.match(/^[A-Z][0-9A-Z]{0,7}$/)
-        true
-      else if s.match(/^\=/)
-        true
-      else
-        false
-
     a = null
     gr= [null, null]
     grp = 0
     for d in data
-      if is_gr(d)
+      if d.is_gr()
         gr[grp] = parseInt(d[2], 10)
         grp+=1
-      else if is_address(d)
+      else if d.is_address()
         throw 'multiple address' if a?
         a = d
       else

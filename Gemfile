@@ -4,3 +4,6 @@ source "https://rubygems.org"
 
 gem 'guard'
 gem 'guard-jasmine-node', github: 'kapoq/guard-jasmine-node'
+
+gem 'hamlit'
+gem 'jekyll'

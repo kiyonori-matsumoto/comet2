@@ -2,30 +2,34 @@ Casl = require '../src/casl.coffee'
 
 LD = 'LABEL LD GR1,GR2 comment test'
 
+casl = null
+
 describe "Casl", ->
+  beforeEach ->
+    casl = new Casl
   describe ".parse", ->
     it 'can parse with label', ->
-      r = Casl.parse LD
+      r = casl.parse LD
       expect(r).toEqual(jasmine.any(Array))
       expect(r.length).toBe 1
       expect(r[0]).toEqual([['LABEL'], ['LD'], ['GR1','GR2'], 'comment test'])
 
     it 'can parse without label', ->
-      r = Casl.parse "\t ST\tGR7,ADDR ; comment"
+      r = casl.parse "\t ST\tGR7,ADDR ; comment"
       expect(r).toEqual(jasmine.any(Array))
       expect(r.length).toBe 1
       expect(r[0]).toEqual([[''], ['ST'], ['GR7','ADDR'], '; comment'])
 
     it 'can parse with comment', ->
-      r = Casl.parse "\tNOP ; comment"
+      r = casl.parse "\tNOP ; comment"
       expect(r).toEqual(jasmine.any(Array))
       expect(r.length).toBe 1
       expect(r[0]).toEqual([[''], ['NOP'], [], '; comment'])
 
   describe ".to_inst", ->
     it "can decode instruction LD", ->
-      r = Casl.parse LD
-      r = Casl.to_inst(r)
+      r = casl.parse LD
+      r = casl.to_inst(r)
       expect(r.length).toBe 1
       expect(r[0].name).toBe 'ld'
       expect(r[0].size).toBe 1
@@ -33,7 +37,7 @@ describe "Casl", ->
       expect(r[0].address).toBeNull
 
     it 'can decode instruction with address', ->
-      r = Casl.to_inst(Casl.parse('  ST  GR7,LABEL '))
+      r = casl.to_inst(casl.parse('  ST  GR7,LABEL '))
       expect(r.length).toBe 1
       expect(r[0].name).toBe 'st'
       expect(r[0].size).toBe 2
@@ -42,7 +46,7 @@ describe "Casl", ->
       expect(r[0].current_address).toBe 0
 
     it 'can decode instruction dc', ->
-      r = Casl.to_inst(Casl.parse("DATA DC 10,#20,'test',NIKAIDO"))
+      r = casl.to_inst(casl.parse("DATA DC 10,#20,'test',NIKAIDO"))
       expect(r.length).toBe 1
       expect(r[0].name).toBe 'dc'
       expect(r[0].size).toBe 7

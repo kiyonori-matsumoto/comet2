@@ -24,9 +24,9 @@ class Comet2Simulator
       if (i.size == 1)
         @gr.get(i.gr[1])
       else if i.effective # effective address?
-        i.address[0] + @gr.get(i.gr[1])
+        i.address + @gr.get(i.gr[1])
       else # content of effective address?
-        @memory.get(i.address[0] + @gr.get(i.gr[1]))
+        @memory.get(i.address + @gr.get(i.gr[1]))
     result = null
 
     if i.type == 'ALITHMETIC' || i.type == 'LOGICAL'
@@ -43,7 +43,7 @@ class Comet2Simulator
       result = a
 
     if i.target == 'memory'
-      @memory.set(i.address[0], result)
+      @memory.set(i.address, result)
     else if i.target == 'gr'
       @gr.set(i.gr[0], result)
 
